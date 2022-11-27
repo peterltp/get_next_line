@@ -5,110 +5,64 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ple- <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 14:56:30 by ple-              #+#    #+#             */
-/*   Updated: 2022/11/26 16:23:22 by ple-             ###   ########.fr       */
+/*   Created: 2022/11/27 14:13:40 by ple-              #+#    #+#             */
+/*   Updated: 2022/11/27 14:31:00 by ple-             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	read_and_stash(int fd, t_list **stash, int *readed_ptr)
+size_t	ft_strlen(char *str)
 {
-	char	*buff;
-	
-	while (!found_new_line(*stash) && *readed_ptr != 0)
-	{
-		buff = malloc (sizeof(char) * (BUFFER_SIZE + 1));
-		if (!buff)
-			return (NULL);
-		*readed_ptr = (int)read(fd, buff, BUFFER_SIZE);
-		if ((*stash == NULL && *readed_ptr == 0) || *reader_ptr == -1)
-		{
-			free(buff);
-			return 0;
-		}
-		buff[*readed_ptr] = '\0';
-		add_stash(stash, buff, *readed_ptr);
-		free(buff);
-	}
-}
-/*looks for a newline character in the given linked list */
-int	found_new_line()
-{
-	int	i;
-	t_list	*current;
+	size_t len;
 
-	if (!stash)
+	len = 0;
+	if (!str)
 		return (0);
-	current = ft_last_node;
-	i = 0;
-	while (current->content[i])
-	{
-		if (current->content[i] = '\n')
-			return (1);
-		i++;
-	}
-	return (0);
+	while (str[len] != '\0')
+		len++;
+	return (len);
 }
-/*return a pointer to the last node in stash */
-t_list	*ft_last_node(t_list *stash)
-{
-	t_list	*current;
 
-	currnet = stash;
-	while (current && current->next)
-		current = current->next;
-	return (current);
-}
-/*add the content of buffer to the end of stash */
-void	add_stash(t_list **stash, char *buff, int readed)
+char	*ft_strchr(char *s, int c)
 {
 	int	i;
-	t_list	*last;
-	t_list	*new_node;
 
-	new_node = malloc (sizeof(t_list));
-	if (!new_node)
-		return (NULL);
-	new_node->next = NULL;
-	new_node->content = malloc (sizeof (char) * (readed + 1));
-	if (new_node->content == NULL)
-		return (NULL);
 	i = 0;
-	while (buff[i] && i < readed)
+	while (s[i])
 	{
-		new_node->content[i] = buff[i];
+		if (s[i] == (char)c)
+			return ((char *)(s + i));
 		i++;
 	}
-	new_node->content[i] = '\0';
-	if (*stash == NULL)
+	if (s[i] == (char)c)
+		return ((char *)(s + i));
+	return (NULL);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*new_string;
+	int		i1;
+	int		i2;
+	size_t	s1_len;
+	size_t	s2_len;
+
+	i1 = 0;
+	i2 = 0;
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	new_string = (char *) malloc(s1_len + s2_len + 1);
+	if (!s1 || !s2 || !new_string)
+		return (0);
+	while (s1[i1] != '\0')
 	{
-		*stash = new_node;
-		return (NULL);
+		new_string[i1] = s1[i1];
+		i1++;
 	}
-	last = ft_last_node(*stash);
-	last->next = new_node;
+	while (s2[i2] != '\0')
+		new_string[i1++] = s2[i2++];
+	new_string[i1] = '\0';
+	return (new_string);
 }
-/*extract all characters from stash and stores in out line. 
- * stopping after the first \n in encounters */
-void	extract_line(t_list *stash, char **line)
-{
-	int	i;
-	int	j;
 
-	if (!stash)
-		return (NULL);
-	generate_line(line, stash)
-
-
-
-}
-/*calculate th number of chars in the current line,
- * including the trailing \n if there is one, and allocates memory accordingly */
-void	generate_line(char **line, t_list *stash)
-{
-
-
-
-
-}

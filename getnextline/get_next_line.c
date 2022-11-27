@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ple- <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 14:55:28 by ple-              #+#    #+#             */
-/*   Updated: 2022/11/26 16:23:26 by ple-             ###   ########.fr       */
+/*   Created: 2022/11/27 14:10:01 by ple-              #+#    #+#             */
+/*   Updated: 2022/11/27 14:18:00 by ple-             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,15 @@
 
 char	*get_next_line(int fd)
 {
-	static t_list	*stash;
-	char			*line;
-	int				readed;
+	char	*line;
+	static char	*save;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
+	save = ft_read_and_save(fd, save);
+	if (!save)
 		return (NULL);
-	readed = 1;
-	line   = NULL;
-	stash  = NULL;
-	// read from fd and save it in stash
-	read_and_stash(fd, &stash, &readed);
-	if (stash == NULL)
-		return (NULL);
-	//2. extract from stash to line 
-	extract_line(stash, &line);
-	//3. clean up stash 
+	line = ft_get_line(save);
+	save = ft_save(save);
 	return (line);
 }
