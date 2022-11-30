@@ -6,7 +6,7 @@
 /*   By: ple- <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 14:10:01 by ple-              #+#    #+#             */
-/*   Updated: 2022/11/30 10:59:39 by ple-             ###   ########.fr       */
+/*   Updated: 2022/11/30 16:10:26 by ple-             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char static	*ft_get_line(char *save)
 {
-	int	i;
+	int		i;
 	char	*s;
 
 	i = 0;
@@ -22,7 +22,7 @@ char static	*ft_get_line(char *save)
 		return (NULL);
 	while (save[i] && save[i] != '\n')
 		i++;
-	s = (char *)malloc (sizeof(char) * (i + 2));
+	s = (char *)malloc (sizeof(char) * (i + 1));
 	if (!s)
 		return (NULL);
 	i = 0;
@@ -92,7 +92,7 @@ char static	*ft_read_and_save(int fd, char *save)
 
 char	*get_next_line(int fd)
 {
-	char	*line;
+	char		*line;
 	static char	*save;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)

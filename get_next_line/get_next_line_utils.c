@@ -6,7 +6,7 @@
 /*   By: ple- <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 14:13:40 by ple-              #+#    #+#             */
-/*   Updated: 2022/11/27 14:31:00 by ple-             ###   ########.fr       */
+/*   Updated: 2022/11/30 16:04:31 by ple-             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(char *str)
 {
-	size_t len;
+	size_t	len;
 
 	len = 0;
 	if (!str)
@@ -29,40 +29,43 @@ char	*ft_strchr(char *s, int c)
 	int	i;
 
 	i = 0;
-	while (s[i])
+	if (!s)
+		return (0);
+	if (c == '\0')
+		return ((char *) &s[ft_strlen(s)]);
+	while (s[i] != '\0')
 	{
 		if (s[i] == (char)c)
-			return ((char *)(s + i));
+			return ((char *)&s[i]);
 		i++;
 	}
-	if (s[i] == (char)c)
-		return ((char *)(s + i));
-	return (NULL);
+	return (0);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*new_string;
-	int		i1;
-	int		i2;
-	size_t	s1_len;
-	size_t	s2_len;
+	size_t	i;
+	size_t	c;
+	char	*str;
 
-	i1 = 0;
-	i2 = 0;
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	new_string = (char *) malloc(s1_len + s2_len + 1);
-	if (!s1 || !s2 || !new_string)
-		return (0);
-	while (s1[i1] != '\0')
+	if (!s1)
 	{
-		new_string[i1] = s1[i1];
-		i1++;
+		s1 = (char *) malloc(1 * sizeof(char));
+		s1[0] = '\0';
 	}
-	while (s2[i2] != '\0')
-		new_string[i1++] = s2[i2++];
-	new_string[i1] = '\0';
-	return (new_string);
+	if (!s1 || !s2)
+		return (NULL);
+	str = malloc ((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (str == NULL)
+		return (NULL);
+	i = -1;
+	c = 0;
+	if (s1)
+		while (s1[++i] != '\0')
+			str[i] = s1[i];
+	while (s2[c] != '\0')
+		str[i++] = s2[c++];
+	str[ft_strlen(s1) + ft_strlen(s2)] = '\0';
+	free(s1);
+	return (str);
 }
-
